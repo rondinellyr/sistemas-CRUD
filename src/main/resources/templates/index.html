@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>CRUD - Animais</title>
+</head>
+<body>
+    
+    <div id="esquerda">
+        <h1 th:text="${arrayDados}" id="dados" style="display: none;"></h1>
+        
+        <form th:action="@{/adicionar}" method="post">
+            <input type="text" name="nome" placeholder="Nome" />
+            <input type="text" name="raca" placeholder="Raça" />
+            <select id="elementos" name="sexo">
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+            </select>
+            <input type="text" name="cor" placeholder="Cor" />
+            <input type="date" name="data" placeholder="Data de nascimento" />
+            <input type="text" name="peso" placeholder="Peso" />
+            <input type="text" name="altura" placeholder="Altura" />
+            <button type="submit">Adicionar Animal</button>
+        </form>    
+        <form th:action="@{/atualizar}" method="post">
+            <input type="text" name="nome" placeholder="Nome do animal que vai ser substituido" />
+            <input type="text" name="nome" placeholder="Nome" />
+            <input type="text" name="raca" placeholder="Raça" />
+            <select id="elementos" name="sexo">
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+            </select>
+            <input type="text" name="cor" placeholder="Cor" />
+            <input type="text" name="data" placeholder="Data de nascimento" />
+            <input type="text" name="peso" placeholder="Peso" />
+            <input type="text" name="altura" placeholder="Altura" />
+            <button type="submit">Atualizar Animal</button>
+        </form>    
+        <form th:action="@{/deletar}" method="post">
+            <input type="text" name="nome" />
+            <button type="submit">Deletar Animal</button>
+        </form>
+    
+        <form th:action="@{/mostrar}" method="post">
+            <button type="submit">Mostrar todos os animais</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Raça</th>
+                <th>Sexo</th>
+                <th>Cor</th>
+                <th>Nascimento</th>
+                <th>Peso</th>
+                <th>Altura</th>
+            </tr>
+        </thead>
+        <tbody id="tabela">
+        </tbody>
+    </table>
+
+
+    <script>
+        const dados = JSON.parse(document.getElementById("dados").textContent);
+        const tableBody = document.getElementById('tabela'); 
+        console.log(dados)
+        dados.forEach(data => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${data.nome}</td>
+                <td>${data.raca}</td>
+                <td>${data.sexo}</td>
+                <td>${data.cor}</td>
+                <td>${data.nascimento}</td>
+                <td>${data.peso}</td>
+                <td>${data.altura}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    </script>
+</body>
+</html>
