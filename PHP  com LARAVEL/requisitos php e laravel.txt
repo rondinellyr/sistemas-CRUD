@@ -1,0 +1,7 @@
+Requisitos para testar o PHP com o LARAVEL:
+
+-Visual Studio Code;
+-Xampp;
+-Composer.
+
+Todos são gratuitos.
