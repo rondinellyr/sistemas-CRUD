@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
+    <title>Seu Título</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'sans-serif';
+}
+
+body
+{
+    display: flex;
+}
+
+#esquerda
+{
+    width: 40%;
+    background-color: #ebebeb;
+    box-shadow: 1px 0px 25px #bdbdbd;
+}
+
+form
+{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 3.5rem auto;
+    gap: 8px;
+    & *
+    {
+        padding: 10px;
+    }
+}
+
+button
+{
+    cursor: pointer;
+    background-color: #8cc6ff;
+    margin-top: 15px;
+    padding: 15px;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.25rem;
+    transition: filter, position, top .2s;
+
+    &:hover
+    {
+        filter: brightness(90%);
+    }
+
+    &:active
+    {
+        position: relative;
+        top: 5px;
+    }
+
+}
+
+table
+{
+    position: fixed;
+    width: 50%;
+    margin-top: 2.5rem;
+    right: 3rem;
+}
+
+table, td, tr, thead
+{
+    padding: 5px;
+    border: 1px solid black;
+}
+</style>
+<body>
+    <div id="esquerda">
+        <h1 th:text="${arrayDados}" id="dados" style="display: none;"></h1>
+        <!-- <h1>Olá, aqui estão algumas opções do controle de animais!</h1> -->
+        <form th:action="@{/adicionar}" method="post">
+            <input type="text" name="nome" placeholder="Nome do animal" />
+            <input type="text" name="raca" placeholder="Raça do animal" />
+            <select id="elementos" name="sexo">
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+            </select>
+            <input type="text" name="cor" placeholder="Cor do animal" />
+            <input type="text" name="data" placeholder="Data de nascimento" />
+            <input type="text" name="peso" placeholder="Peso do animal" />
+            <input type="text" name="altura" placeholder="Altura do animal" />
+            <button type="submit">Adicionar Animal</button>
+        </form>    
+        <form th:action="@{/atualizar}" method="post">
+            <input type="text" name="nome_substituicao" placeholder="Nome do animal que vai ser substituido" />
+            <input type="text" name="nome" placeholder="Nome do animal" />
+            <input type="text" name="raca" placeholder="Raça do animal" />
+            <select id="elementos" name="sexo">
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+            </select>
+            <input type="text" name="cor" placeholder="Cor do animal" />
+            <input type="text" name="data" placeholder="Data de nascimento" />
+            <input type="text" name="peso" placeholder="Peso do animal" />
+            <input type="text" name="altura" placeholder="Altura do animal" />
+            <button type="submit">Atualizar Animal</button>
+        </form>    
+        <form th:action="@{/deletar}" method="post">
+            <input type="text" name="nome" placeholder="Nome do animal que vai ser excluído"/>
+            <button type="submit">Deletar Animal</button>
+        </form>
+    
+        <form th:action="@{/mostrar}" method="post">
+            <button type="submit">Mostrar todos os animais</button>
+        </form>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Raça</th>
+                <th>Sexo</th>
+                <th>Cor</th>
+                <th>Nascimento</th>
+                <th>Peso</th>
+                <th>Altura</th>
+            </tr>
+        </thead>
+        <tbody id="tabela">
+        </tbody>
+    </table>
+
+
+    <script>
+        const dados = JSON.parse(document.getElementById("dados").textContent);
+        const tableBody = document.getElementById('tabela'); 
+        console.log(dados)
+        
+        dados.forEach(data => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${data.nome}</td>
+                <td>${data.raca}</td>
+                <td>${data.sexo}</td>
+                <td>${data.cor}</td>
+                <td>${data.nascimento}</td>
+                <td>${data.peso}</td>
+                <td>${data.altura}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    </script>
+</body>
+</html>
